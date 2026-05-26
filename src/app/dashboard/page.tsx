@@ -55,7 +55,7 @@ export default function Dashboard() {
 
   // ── FEED ──────────────────────────────────────────────────────────────────
   function FeedTab() {
-    const sorted = [...group.members].sort((a, b) => {
+    const sorted = [...(group?.members ?? [])].sort((a, b) => {
       const aW = rounds.filter(r => r.winnerId === a.userId).length
       const bW = rounds.filter(r => r.winnerId === b.userId).length
       return bW - aW
