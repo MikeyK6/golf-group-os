@@ -27,8 +27,12 @@ export default function LoginPage() {
     try {
       await signInWithGoogle()
       router.replace('/dashboard')
-    } catch {
-      setError('Google sign-in failed')
+    } catch (err: any) {
+      if (err?.code === 'auth/popup-closed-by-user') {
+        setLoading(false)
+        return
+      }
+      setError('Google sign-in failed: ' + (err?.message ?? ''))
       setLoading(false)
     }
   }
