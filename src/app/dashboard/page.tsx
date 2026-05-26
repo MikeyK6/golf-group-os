@@ -32,7 +32,7 @@ export default function Dashboard() {
     if (!user) { router.replace('/auth/login'); return }
     getDoc(doc(db, 'users', user.uid)).then(snap => {
       const groups: string[] = snap.data()?.groups ?? []
-      if (groups.length === 0) { router.replace('/auth/onboarding'); return }
+      if (groups.length === 0) { router.replace('/auth/onboarding?uid=' + user.uid); return }
       setGid(groups[0])
     })
   }, [user, authLoading, router])

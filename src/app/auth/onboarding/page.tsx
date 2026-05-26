@@ -19,8 +19,8 @@ const FORMATS: { value: RoundFormat; label: string }[] = [
 
 export default function OnboardingPage() {
   const router = useRouter()
-  const [step, setStep]           = useState<Step>('account')
-  const [uid, setUid]             = useState('')
+  const [step, setStep] = useState<Step>(typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('uid') ? 'group-choice' : 'account')
+  const [uid, setUid] = useState(typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('uid') ?? '' : '')
   const [groupId, setGroupId]     = useState('')
   const [inviteCode, setCode]     = useState('')
 
