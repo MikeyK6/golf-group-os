@@ -47,7 +47,7 @@ export default function Dashboard() {
     )
   }
 
-  const memberMap = Object.fromEntries(group.members.map(m => [m.userId, m]))
+  const memberMap = Object.fromEntries((group?.members ?? []).map(m => [m.userId, m]))
 
   function SectionLabel({ children }: { children: React.ReactNode }) {
     return <p className="text-[10px] font-medium text-gray-400 uppercase tracking-wider mb-2 mt-4 first:mt-0">{children}</p>
@@ -82,7 +82,7 @@ export default function Dashboard() {
         <SectionLabel>Recent rounds</SectionLabel>
         {rounds.length === 0
           ? <div className="text-center py-8 text-gray-400 text-sm">No rounds yet — log your first one!</div>
-          : rounds.map(r => <FeedCard key={r.id} round={r} group={group} />)
+          : rounds.map(r => <FeedCard key={r.id} round={r} group={group!} />)
         }
         <button onClick={() => setTab('log')} className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white rounded-xl py-2.5 text-sm font-medium mt-1 hover:opacity-85 transition-opacity">
           + Log a round
@@ -316,7 +316,7 @@ export default function Dashboard() {
 
         <div className="flex-1 p-3.5 overflow-auto">
           {tab === 'log'
-            ? <LogRound group={group} userId={user!.uid} onSaved={() => setTab('feed')} onCancel={() => setTab('feed')} />
+            ? <LogRound group={group!} userId={user!.uid} onSaved={() => setTab('feed')} onCancel={() => setTab('feed')} />
             : tabContent[tab]
           }
         </div>
