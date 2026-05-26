@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green-600: #3B6D11;
+  --green-50: #EAF3DE;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display { font-family: 'Syne', system-ui, sans-serif; }
+.font-mono    { font-family: 'IBM Plex Mono', monospace; }
+
+/* Smooth tab transitions */
+.view-enter  { opacity: 0; transform: translateY(4px); }
+.view-active { opacity: 1; transform: translateY(0); transition: all 0.2s ease; }
