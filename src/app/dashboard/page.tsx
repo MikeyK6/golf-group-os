@@ -149,7 +149,7 @@ export default function Dashboard() {
 
   // ── STATS ─────────────────────────────────────────────────────────────────
   function StatsTab() {
-    const me = group.members.find(m => m.userId === user?.uid)
+    const me = (group?.members ?? []).find(m => m.userId === user?.uid)
     const myRounds  = rounds.filter(r => r.playerScores.some(p => p.userId === user?.uid))
     const myWins    = myRounds.filter(r => r.winnerId === user?.uid).length
     const myNets    = myRounds.flatMap(r => r.playerScores.filter(p => p.userId === user?.uid).map(p => p.net))
@@ -184,7 +184,7 @@ export default function Dashboard() {
         </div>
         <SectionLabel>Group members</SectionLabel>
         <div className="bg-white border border-gray-100 rounded-xl px-3 py-1">
-          {group.members.map(m => {
+          {(group?.members ?? []).map(m => {
             const mw = rounds.filter(r => r.winnerId === m.userId).length
             const mr = rounds.filter(r => r.playerScores.some(p => p.userId === m.userId)).length
             return (
@@ -208,17 +208,17 @@ export default function Dashboard() {
     return (
       <div>
         <SectionLabel>Ryder Cup</SectionLabel>
-        {group.ryderCup ? (
+        {group?.ryderCup ? (
           <div className="bg-gray-50 border border-gray-100 rounded-xl p-3 mb-3">
             <p className="text-[13px] font-medium font-display text-gray-900 mb-1">Ryder Cup 2025</p>
             <div className="flex items-center gap-2">
               <div className="flex-1 bg-white border border-gray-100 rounded-lg p-2.5 text-center">
-                <p className="text-[10px] text-gray-400 uppercase tracking-wider">{group.ryderCup.teamA.name}</p>
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider">{group?.ryderCup.teamA.name}</p>
                 <p className="text-2xl font-mono font-medium text-gray-900">—</p>
               </div>
               <span className="text-[11px] text-gray-400 font-medium">vs</span>
               <div className="flex-1 bg-white border border-gray-100 rounded-lg p-2.5 text-center">
-                <p className="text-[10px] text-gray-400 uppercase tracking-wider">{group.ryderCup.teamB.name}</p>
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider">{group?.ryderCup.teamB.name}</p>
                 <p className="text-2xl font-mono font-medium text-gray-900">—</p>
               </div>
             </div>
@@ -241,7 +241,7 @@ export default function Dashboard() {
 
   // ── HISTORY ───────────────────────────────────────────────────────────────
   function HistoryTab() {
-    const topScorers = [...group.members]
+    const topScorers = [...(group?.members ?? [])]
       .map(m => ({ m, wins: rounds.filter(r => r.winnerId === m.userId).length }))
       .sort((a, b) => b.wins - a.wins)
 
@@ -267,13 +267,13 @@ export default function Dashboard() {
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-[11px] text-gray-400 mb-1">Members</p>
-            <p className="text-xl font-mono font-medium text-gray-900">{group.members.length}</p>
+            <p className="text-xl font-mono font-medium text-gray-900">{(group?.members ?? []).length}</p>
           </div>
         </div>
         <SectionLabel>Invite code</SectionLabel>
         <div className="bg-gray-900 rounded-xl p-4 text-center">
           <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-1">Share with friends</p>
-          <p className="font-mono font-bold text-2xl tracking-widest text-white">{group.inviteCode}</p>
+          <p className="font-mono font-bold text-2xl tracking-widest text-white">{group?.inviteCode}</p>
         </div>
       </div>
     )
@@ -294,7 +294,7 @@ export default function Dashboard() {
           </h1>
           <div className="flex items-center gap-2">
             <div className="text-[11px] text-gray-400 bg-gray-50 border border-gray-100 rounded-full px-2.5 py-1 flex items-center gap-1 cursor-pointer">
-              {group.name} <span className="text-gray-300">▾</span>
+              {group?.name} <span className="text-gray-300">▾</span>
             </div>
             <button onClick={signOut} className="w-7 h-7 border border-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs hover:bg-gray-50">
               ↩
